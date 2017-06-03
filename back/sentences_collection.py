@@ -13,10 +13,9 @@ class SentencesCollection(RestfulRessourceCollection):
     def __init__(self):
         super(SentencesCollection, self).__init__(self.NAME, self.SCHEMA)
 
-    def increment(self, url_args, header_args):
-        id = int(url_args['id'])
+    def increment(self, id):
         if id < len(self._list):
             self._list[id].set_attribute('vote', self._list[id].get_attribute('vote') + 1)
-            return self.get_all(url_args)
+            return self.get_all()
         else:
             raise RestfulServerNotFound()

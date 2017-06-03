@@ -32,35 +32,32 @@ class RestfulRessourceCollection():
 
         self.load()
 
-    def add(self, url_args, header_args):
+    def add(self, header_args):
         ressource = RestfulRessource(self._schema)
         print ressource
         ressource.update(header_args)
         self._list.append(ressource)
         self.save()
         print str(self)
-        return self.get_all(url_args)
+        return self.get_all()
 
-    def update(self, url_args, header_args):
-        id = int(url_args['id'])
+    def update(self, id, header_args):
         if id < len(self._list):
             self._list[id].update(header_args)
             self.save()
-            return self.get_all(url_args)
+            return self.get_all()
         else:
             raise RestfulServerNotFound()
 
-    def delete(self, url_args):
-        id = int(url_args['id'])
+    def delete(self, id):
         if id < len(self._list):
             self._list.pop(id)
             self.save()
-            return self.get_all(url_args)
+            return self.get_all()
         else:
             raise RestfulServerNotFound()
         
-    def get(self, url_args):
-        id = int(url_args['id'])
+    def get(self, id):
         if id < len(self._list):
             return json.dumps(self._list[id])
         else:
@@ -72,5 +69,5 @@ class RestfulRessourceCollection():
     def __str__(self):
         return str([str(ressource) for ressource in self._list])
 
-    def get_all(self, url_args):
+    def get_all(self):
         return json.dumps(self._list)

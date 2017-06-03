@@ -81,6 +81,10 @@ class RestfulServerException(Exception):
         return self._message
 
 
+class RestfulServerBadRequest(RestfulServerException):
+    def __init__(self):
+        super(RestfulServerInternalServerError, self).__init__(400)
+        
 class RestfulServerUnauthorized(RestfulServerException): 
     def __init__(self):
         super(RestfulServerUnauthorized, self).__init__(401)

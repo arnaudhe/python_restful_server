@@ -24,33 +24,48 @@ class Router():
         for route in self.routes:
             url_args = re.match(route['path'], path)
             if ((url_args) and (route['method'] == 'GET')):
-                return getattr(self.services.get(route['service']), route['function'])(url_args.groupdict())
+                try:
+                    return getattr(self.services.get(route['service']), route['function'])(**url_args.groupdict())
+                except AttributeError:
+                    raise RestfulServerBadRequest()
         raise RestfulServerNotFound()
 
     def do_POST(self, path, header_args):
         for route in self.routes:
             url_args = re.match(route['path'], path)
             if ((url_args) and (route['method'] == 'POST')):
-                return getattr(self.services.get(route['service']), route['function'])(url_args.groupdict(), header_args)
+                try:
+                    return getattr(self.services.get(route['service']), route['function'])(**url_args.groupdict(), header_args)
+                except AttributeError:
+                    raise RestfulServerBadRequest()
         raise RestfulServerNotFound()
 
     def do_DELETE(self, path):
         for route in self.routes:
             url_args = re.match(route['path'], path)
             if ((url_args) and (route['method'] == 'DELETE')):
-                return getattr(self.services.get(route['service']), route['function'])(url_args.groupdict())
+                try:
+                    return getattr(self.services.get(route['service']), route['function'])(**url_args.groupdict())
+                except AttributeError:
+                    raise RestfulServerBadRequest()
         raise RestfulServerNotFound()
 
     def do_PATCH(self, path, header_args):
         for route in self.routes:
             url_args = re.match(route['path'], path)
             if ((url_args) and (route['method'] == 'PATCH')):
-                return getattr(self.services.get(route['service']), route['function'])(url_args.groupdict(), header_args)
+                try:
+                    return getattr(self.services.get(route['service']), route['function'])(**url_args.groupdict(), header_args)
+                except AttributeError:
+                    raise RestfulServerBadRequest()
         raise RestfulServerNotFound()
 
     def do_PUT(self, path, header_args):
         for route in self.routes:
             url_args = re.match(route['path'], path)
             if ((url_args) and (route['method'] == 'PUT')):
-                return getattr(self.services.get(route['service']), route['function'])(url_args.groupdict(), header_args)
+                try:
+                    return getattr(self.services.get(route['service']), route['function'])(**url_args.groupdict(), header_args)
+                except AttributeError:
+                    raise RestfulServerBadRequest()
         raise RestfulServerNotFound()
